@@ -1,0 +1,24 @@
+---
+import Base from '../../../layouts/Base.astro';
+import QuotesPage from '../../../components/QuotesPage.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const quotes = (await getCollection('quotes')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  const totalPages = Math.ceil(quotes.length / 20);
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const page = i + 2;
+    return {
+      params: { page: String(page) },
+      props: { entries: quotes.slice((page - 1) * 20, page * 20), page, totalPages },
+    };
+  });
+}
+
+const { entries, page, totalPages } = Astro.props;
+---
+<Base title={`Quotes, page ${page} | Adam Tank`} description="A running collection of quotes worth keeping.">
+  <QuotesPage entries={entries} page={page} totalPages={totalPages} />
+</Base>

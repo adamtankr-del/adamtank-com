@@ -1,0 +1,67 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'quotes'>[];
+  page: number;
+  totalPages: number;
+}
+const { entries, page, totalPages } = Astro.props;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const rendered = await Promise.all(
+  entries.map(async (q) => ({ q, Content: (await render(q)).Content }))
+);
+const pageHref = (n: number) => (n === 1 ? '/quotes' : `/quotes/page/${n}`);
+---
+<div class="wrap">
+  <section class="section">
+    <p class="eyebrow">Collected over the years</p>
+    <h1>Quotes</h1>
+    <p>Words worth keeping, one at a time.</p>
+  </section>
+
+  <div class="quote-feed">
+    {rendered.map(({ q, Content }) => (
+      <article class="quote-entry">
+        <header>
+          <h2>{q.data.title.replace(/\s*\|\s*ThinkTank$/, '')}</h2>
+          <span class="meta">{fmt(q.data.date)}</span>
+        </header>
+        <div class="prose quote-body">
+          <Content />
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <nav class="pagination" aria-label="Quotes pages">
+    {page > 1 ? <a href={pageHref(page - 1)}>← Newer</a> : <span />}
+    <span class="meta">Page {page} of {totalPages}</span>
+    {page < totalPages ? <a href={pageHref(page + 1)}>Older →</a> : <span />}
+  </nav>
+</div>
+
+<style>
+  .quote-feed { display: flex; flex-direction: column; gap: 3rem; }
+  .quote-entry { border-top: 1px solid var(--line); padding-top: 2.5rem; }
+  .quote-entry header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .quote-entry h2 { margin: 0 0 0.75rem; font-size: 1.35rem; }
+  .meta { color: var(--ink-faint); font-size: 0.85rem; white-space: nowrap; }
+  .quote-body { font-size: 1.1rem; }
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.5rem;
+  }
+</style>
