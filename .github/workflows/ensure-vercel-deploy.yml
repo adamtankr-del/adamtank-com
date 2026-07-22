@@ -1,0 +1,38 @@
+# Safety net for Vercel's git integration. GitHub delivers each push event to
+# Vercel exactly once with no retry; a dropped delivery means the commit is
+# never built and no error surfaces anywhere (hit on fullflow 2026-07-22).
+# This workflow waits for the integration to act, then checks the Vercel API
+# for a deployment matching the pushed SHA and triggers one if none exists.
+# gitSource uses ref main (not the SHA) so a recovery always builds the newest
+# commit.
+name: Ensure Vercel deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ensure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Vercel's git integration
+        run: sleep 150
+
+      - name: Trigger deploy if Vercel missed the push
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          PROJECT_ID: prj_RRFebRknMxjws8024UI8zAzEndjg
+          TEAM_ID: team_CmXwocbeeEXnhwci9z359nkA
+          REPO_ID: "1309147714"
+        run: |
+          COUNT=$(curl -sf -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v6/deployments?projectId=$PROJECT_ID&teamId=$TEAM_ID&meta-githubCommitSha=${{ github.sha }}" \
+            | jq '.deployments | length' || echo "")
+          if [ -n "$COUNT" ] && [ "$COUNT" -gt 0 ]; then
+            echo "Vercel picked up ${{ github.sha }} ($COUNT deployment(s)). Nothing to do."
+            exit 0
+          fi
+          echo "No deployment found for ${{ github.sha }} after 150s. Triggering one via API."
+          curl -sf -X POST -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+            "https://api.vercel.com/v13/deployments?teamId=$TEAM_ID" \
+            -d "{\"name\":\"adamtank-com\",\"project\":\"adamtank-com\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repoId\":$REPO_ID,\"ref\":\"main\"}}" \
+            | jq '{id, readyState, url}'
