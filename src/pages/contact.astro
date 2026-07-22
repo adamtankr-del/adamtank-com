@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contact | Adam Tank" description="Get in touch with Adam Tank for speaking, consulting, or anything else.">
+  <div class="wrap">
+    <section class="section">
+      <p class="eyebrow">Contact</p>
+      <h1>Get in touch</h1>
+      <p>
+        Speaking inquiry, consulting question, or just want to say hello? Use the form below.
+        I read every submission and will respond within 48 to 72 hours.
+      </p>
+    </section>
+    <section class="section">
+      <form method="POST" action="/api/contact" data-async>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <input id="subject" name="subject" required />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="7" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+      <p class="form-note" hidden data-success>Thanks for reaching out. I'll get back to you within 48 to 72 hours.</p>
+    </section>
+  </div>
+  <style>
+    .form-note { color: var(--accent); font-weight: 600; }
+  </style>
+  <script>
+    document.querySelectorAll('form[data-async]').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const f = e.target as HTMLFormElement;
+        const btn = f.querySelector('button');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        try {
+          const res = await fetch(f.action, { method: 'POST', body: new FormData(f) });
+          if (!res.ok) throw new Error('failed');
+          f.hidden = true;
+          const note = f.parentElement?.querySelector('[data-success]');
+          if (note) (note as HTMLElement).hidden = false;
+        } catch {
+          if (btn) { btn.disabled = false; btn.textContent = 'Try again'; }
+        }
+      });
+    });
+  </script>
+</Base>

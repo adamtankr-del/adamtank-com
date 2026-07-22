@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { entryUrl } from '../../lib/urls';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<Base title="Blog | Adam Tank" description="Writing on water, technology, entrepreneurship, presentations, and living well.">
+  <div class="wrap-wide">
+    <section class="section">
+      <p class="eyebrow">Writing</p>
+      <h1>Blog</h1>
+      <p>Water, technology, careers, and the occasional experiment on myself.</p>
+    </section>
+    <div class="card-grid">
+      {posts.map((p) => (
+        <article class="card">
+          {p.data.image && (
+            <a href={entryUrl(p, 'new-blog')}><img src={p.data.image} alt="" loading="lazy" /></a>
+          )}
+          <div class="card-body">
+            <h3><a href={entryUrl(p, 'new-blog')}>{p.data.title.replace(/\s*\|\s*ThinkTank$/, '')}</a></h3>
+            <span class="meta">{fmt(p.data.date)}</span>
+            {p.data.description && <p>{p.data.description}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

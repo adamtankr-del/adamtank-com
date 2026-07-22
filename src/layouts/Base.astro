@@ -1,0 +1,64 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/source-serif-4';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = "Adam Tank's personal site: writing on water, entrepreneurship, and living well.", image } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  ['/', 'Start Here'],
+  ['/keynote-speaker', 'Keynote Speaking'],
+  ['/luck-by-design', 'My Book'],
+  ['/new-blog', 'Blog'],
+  ['/quotes', 'Quotes'],
+  ['/contact', 'Contact'],
+];
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Adam Tank</a>
+        <nav class="site-nav">
+          {nav.map(([href, label]) => (
+            <a href={href} aria-current={current === href || (href !== '/' && current.startsWith(href + '/')) ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="cols">
+        <div>
+          © {new Date().getFullYear()} Adam Tank ·
+          <a href="https://www.linkedin.com/in/adamtank/">LinkedIn</a> ·
+          <a href="https://twitter.com/adamctank">Twitter</a>
+        </div>
+        <div>
+          <a href="/new-blog">Blog</a> · <a href="/quotes">Quotes</a> · <a href="/contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

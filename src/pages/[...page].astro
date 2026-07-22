@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { page: page.data.path.replace(/^\//, '') },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const title = page.data.title.replace(/\s*\|\s*ThinkTank$/, '').trim();
+---
+<Base title={`${title} | Adam Tank`} description={page.data.description}>
+  <article class="wrap">
+    <div class="section prose">
+      <Content />
+    </div>
+  </article>
+</Base>

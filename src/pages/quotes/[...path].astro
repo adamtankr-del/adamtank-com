@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { entryUrl } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const quotes = await getCollection('quotes');
+  return quotes.map((quote) => ({
+    params: { path: entryUrl(quote, 'quotes').replace(/^\/quotes\//, '') },
+    props: { quote },
+  }));
+}
+
+const { quote } = Astro.props;
+const { Content } = await render(quote);
+const title = quote.data.title.replace(/\s*\|\s*ThinkTank$/, '');
+const fmt = quote.data.date.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+---
+<Base title={`${title} | Adam Tank`} description={quote.data.description} image={quote.data.image}>
+  <article class="wrap">
+    <header class="section post-header">
+      <p class="eyebrow">Quote · {fmt}</p>
+      <h1>{title}</h1>
+    </header>
+    <div class="prose quote-body">
+      <Content />
+    </div>
+    <nav class="post-footer">
+      <a href="/quotes">← All quotes</a>
+    </nav>
+  </article>
+  <style>
+    .post-header { margin-bottom: 1.5rem; }
+    .quote-body { font-size: 1.15rem; }
+    .post-footer { margin-top: 3rem; }
+  </style>
+</Base>

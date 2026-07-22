@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { entryUrl } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { path: entryUrl(post, 'new-blog').replace(/^\/new-blog\//, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const title = post.data.title.replace(/\s*\|\s*ThinkTank$/, '');
+const fmt = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+---
+<Base title={`${title} | Adam Tank`} description={post.data.description} image={post.data.image}>
+  <article class="wrap">
+    <header class="section post-header">
+      <h1>{title}</h1>
+      <p class="meta">{fmt}</p>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+    <nav class="post-footer">
+      <a href="/new-blog">← All posts</a>
+    </nav>
+  </article>
+  <style>
+    .post-header { margin-bottom: 2rem; }
+    .meta { color: var(--ink-faint); font-size: 0.9rem; }
+    .post-footer { margin-top: 3rem; }
+  </style>
+</Base>

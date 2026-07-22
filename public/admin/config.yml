@@ -1,0 +1,53 @@
+backend:
+  name: github
+  repo: adamtankr-del/adamtank-com
+  branch: main
+  base_url: https://fullflowmarketing.com
+  auth_endpoint: api/oauth
+  commit_messages:
+    create: "CMS: create {{collection}} \"{{slug}}\""
+    update: "CMS: update {{collection}} \"{{slug}}\""
+    delete: "CMS: delete {{collection}} \"{{slug}}\""
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: blog
+    label: Blog posts
+    folder: content/blog
+    create: true
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: string, hint: "Format: YYYY-MM-DD" }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Cover image, name: image, widget: image, required: false }
+      - { label: Original path, name: originalPath, widget: string, required: false, hint: "Leave blank for new posts" }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: quotes
+    label: Quotes
+    folder: content/quotes
+    create: true
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: string, hint: "Format: YYYY-MM-DD" }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Original path, name: originalPath, widget: string, required: false, hint: "Leave blank for new quotes" }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: pages
+    label: Long-form pages
+    folder: content/pages
+    create: false
+    extension: md
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Path, name: path, widget: string }
+      - { label: Body, name: body, widget: markdown }

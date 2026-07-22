@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/starthere", "destination": "/", "permanent": true },
+    { "source": "/adam-tank-speaking", "destination": "/keynote-speaker", "permanent": true }
+  ]
+}

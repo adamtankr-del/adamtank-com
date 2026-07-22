@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Adam Tank | Water, Entrepreneurship, and a Well-Lived Life">
+  <div class="wrap">
+    <section class="section hero">
+      <p class="eyebrow">Start Here</p>
+      <h1>Hi, I'm Adam.</h1>
+      <p class="lede">
+        I'm an entrepreneur, author, and speaker working at the intersection of water and
+        technology. I co-founded a venture-backed generative design company, wrote a book about
+        the science of luck, and spend the rest of my time writing, podcasting, and helping
+        people give presentations that don't suck.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Popular Writing</h2>
+      <ul class="list">
+        <li>
+          <a href="/luck-by-design"><strong>Luck by Design: The Science and Serendipity of a Well-Lived Life</strong></a><br />
+          How do smart people create dumb luck?
+        </li>
+        <li>
+          <a href="/new-blog/2020/9/29/mba-useless-worth-it-how-to-decide-if-business-school-is-for-you"><strong>MBA: Worth it? Useless? How to decide if you should go to business school</strong></a><br />
+          The no b.s. guide to b-school.
+        </li>
+        <li>
+          <a href="/new-blog/2022/9/6/how-much-caffeine-is-too-much"><strong>Why I quit caffeine</strong></a><br />
+          My experience quitting caffeine cold turkey for 45 days.
+        </li>
+        <li>
+          <a href="/new-blog/2020/4/12/my-failed-attempt-at-the-4-hour-workweek"><strong>My failed attempt at the 4-hour workweek</strong></a><br />
+          I tried to retire on a beach at 23. It didn't work.
+        </li>
+        <li>
+          <a href="/new-blog/2020/3/2/the-fastest-way-to-learn-a-new-language-act-like-a-child"><strong>The fastest way to learn a new language</strong></a><br />
+          The secret I learned to speak fluent Portuguese.
+        </li>
+        <li>
+          <a href="/new-blog/2020/3/31/most-presentations-suck-heres-what-you-can-do-about-it"><strong>How to give presentations that don't suck</strong></a><br />
+          Stop giving PowerPointless presentations.
+        </li>
+      </ul>
+      <p><a href="/new-blog">Browse all writing →</a></p>
+    </section>
+
+    <section class="section">
+      <h2>Things I'm Building</h2>
+      <ul class="list">
+        <li>
+          <a href="https://www.transcendh2o.com"><strong>Transcend Software</strong></a><br />
+          Co-founded a generative design company in 2019 focused on engineering automation for
+          water infrastructure. Our software has helped over 430M people obtain clean water and
+          renewable power, backed by over $30M in top-tier VC funding including
+          <a href="https://www.axios.com/pro/climate-deals/2023/08/03/autodesk-backs-transcends-infrastructure-design-software">Autodesk</a>.
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/newsletters/at-water-s-edge-6862760360009703424/"><strong>At Water's Edge</strong></a><br />
+          Monthly newsletter on the intersection of water and technology, reaching over 4,600 people.
+        </li>
+        <li>
+          <a href="https://www.wateronline.com/solution/water-we-talking-about"><strong>Water We Talking About</strong></a><br />
+          Bi-weekly podcast with the water industry's top storytellers, reaching over 50,000 people.
+        </li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Things About Me</h2>
+      <ul class="list">
+        <li>
+          <a href="https://wikipolitiki.com/resetting-water-water-is-a-we-source-but-not-a-free-source/"><strong>Water geek</strong></a><br />
+          My water <a href="/new-blog/2020/10/3/2030-the-water-industry-youve-never-seen-before">predictions</a>
+          have been viewed roughly 1.2M times (and counting).
+        </li>
+        <li>
+          <a href="https://www.youtube.com/watch?v=dUbwnx_70m8"><strong>Entrepreneur</strong></a><br />
+          Founded and ran a venture-backed <a href="https://eller.arizona.edu/profile/2015/adam-tank">water robotics startup</a>
+          until it was acquired by a publicly traded company.
+        </li>
+        <li>
+          <a href="/keynote-speaker"><strong>Public speaker</strong></a><br />
+          Featured guest and speaker for the nation's leading
+          <a href="https://wordsonwaterwef.com/2019/05/06/words-on-water-87-adam-tank-on-communication-for-the-next-generation/">water podcasts</a>
+          and <a href="https://www.bluetechforum.com/conference-2016/adam-tank/">conferences</a>.
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/pulse/from-jail-cell-c-suite-night-entrepreneurs-defying-adam-tank/"><strong>Volunteer</strong></a><br />
+          I spend time working with incarcerated persons <a href="https://www.linkedin.com/pulse/i-went-prison-again-adam-tank/">in prisons</a>
+          and fishing with <a href="https://www.bbbskc.org/">my little brother</a>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="section subscribe">
+      <h2>Get the goodies</h2>
+      <p>Join the newsletter for occasional writing on water, luck, and building things.</p>
+      <form method="POST" action="/api/subscribe" class="subscribe-form" data-async>
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" />
+        <button class="btn" type="submit">Send it to me</button>
+      </form>
+      <p class="form-note" hidden data-success>Thanks — check your inbox to confirm your email.</p>
+    </section>
+  </div>
+
+  <style>
+    .hero { margin-top: 3rem; }
+    .lede { font-size: 1.2rem; color: var(--ink-soft); max-width: 38rem; }
+    .list { list-style: none; padding: 0; margin: 0; }
+    .list li { margin-bottom: 1.15rem; }
+    .subscribe {
+      background: var(--paper-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .subscribe h2 { margin-top: 0; }
+    .subscribe-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .subscribe-form input {
+      flex: 1 1 14rem;
+      padding: 0.65rem 0.8rem;
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+    .form-note { color: var(--accent); font-weight: 600; }
+  </style>
+
+  <script>
+    document.querySelectorAll('form[data-async]').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const f = e.target as HTMLFormElement;
+        const btn = f.querySelector('button');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        try {
+          const res = await fetch(f.action, { method: 'POST', body: new FormData(f) });
+          if (!res.ok) throw new Error('failed');
+          f.hidden = true;
+          const note = f.parentElement?.querySelector('[data-success]');
+          if (note) (note as HTMLElement).hidden = false;
+        } catch {
+          if (btn) { btn.disabled = false; btn.textContent = 'Try again'; }
+        }
+      });
+    });
+  </script>
+</Base>

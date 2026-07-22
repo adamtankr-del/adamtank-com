@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+const amazon = 'https://www.amazon.com/Luck-Design-Science-Serendipity-Well-Lived/dp/B0CYR4G8MW';
+---
+<Base
+  title="Luck by Design | Adam Tank"
+  description="Luck by Design: The Science and Serendipity of a Well-Lived Life. How do smart people create dumb luck?"
+  image="/images/site/luck-by-design-front.jpg"
+>
+  <div class="wrap">
+    <section class="section book-hero">
+      <div>
+        <p class="eyebrow">The Book</p>
+        <h1>Luck by Design</h1>
+        <h2 class="subtitle">The Science and Serendipity of a Well-Lived Life</h2>
+        <p>How do smart people create dumb luck?</p>
+        <a class="btn" href={amazon}>Purchase on Amazon</a>
+      </div>
+      <img src="/images/site/luck-by-design-front.jpg" alt="Luck by Design book cover" width="280" />
+    </section>
+
+    <section class="section prose">
+      <h2>What this book is about</h2>
+      <p>There is a version of your life that went differently. A better job taken, a conversation had, a flight not missed. You can probably trace it back to a single moment, a lucky break that compounded into something larger. Most people call that chance. This book calls it something else.</p>
+      <p>Luck by Design started with a question that wouldn't leave me alone: why do certain people seem to attract lucky outcomes, again and again, across wildly different circumstances? It isn't intelligence (there are brilliant people who never catch a break) and it isn't effort (plenty of hard workers go unrewarded). And it certainly isn't just blind fortune.</p>
+      <p>The answer, it turns out, is more interesting than any of those explanations. Luck has a structure. It can be studied, understood, and, within limits that matter, designed.</p>
+      <p>This book is the result of several years of research, dozens of conversations with people who've built remarkable lives, and a fair amount of honest self-examination. It draws on behavioral science, psychology, sociology, and the kinds of stories that don't make it into most business books because they're too strange or too human to fit neatly into a framework.</p>
+      <p>What you'll find here is not a list of habits or a productivity system. It's a new way of understanding how the best things in your life happened, and how to create more of the conditions that make them possible.</p>
+
+      <h2>How do smart people create dumb luck?</h2>
+      <p>In <em>Luck by Design: The Science and Serendipity of a Well-Lived Life</em>, Adam Tank unveils the hidden potential of life's seemingly random circumstances. This blend of science and storytelling illuminates the power of embracing serendipity in every facet of our lives, from relationships and education to careers and travel.</p>
+      <p>Through captivating profiles of household names and common people alike, Tank ties a compelling thread across randomness, serendipity, and luck, helping readers answer challenging questions like:</p>
+      <ul>
+        <li>Why are some individuals so seemingly lucky, and others simply floundering through life?</li>
+        <li>How can we create predictable success when unpredictable, chance occurrences drastically alter our paths?</li>
+        <li>How can random events, including traumatic experiences like infidelity, sickness, and war, serve as catalysts for radical personal development?</li>
+      </ul>
+      <p><em>Luck by Design</em> invites readers on a transformative journey to discover how embracing the unexpected can paradoxically result in a richer, more purposeful life.</p>
+    </section>
+
+    <section class="section spreads">
+      <img src="/images/site/luck-by-design-discover-how-to-.jpeg" alt="Luck by Design: discover how to design your luck" loading="lazy" />
+      <img src="/images/site/luck-by-design-inside-the-pages.jpeg" alt="Inside the pages of Luck by Design" loading="lazy" />
+      <img src="/images/site/luck-by-design-embrace-the-unexpected.jpeg" alt="Luck by Design: embrace the unexpected" loading="lazy" />
+    </section>
+
+    <section class="section prose">
+      <h2>About the author</h2>
+      <p>Adam Tank is a microbiologist-turned-entrepreneur, public speaker, and executive consultant whose career has spanned leadership roles in Fortune 100 companies, international small businesses, and venture capital backed technology startups. He is the founder of Tank Consulting and an executive at a VC-backed generative design SaaS startup whose software enables capital planners, project developers, and engineering professionals to rapidly generate preliminary engineering designs for critical infrastructure, including a variety of water and power assets. Through his various business ventures, his companies have impacted over 150 million people in over one hundred countries.</p>
+      <p>Adam is an engaging speaker who has entertained over 50,000 people at more than fifty events. He is a sought-after presenter and coach on topics including how to find product-market fit for early stage companies, how to give presentations that don't suck, how to determine whether graduate school is worth the investment, and how to speak a foreign language fluently in three months or less. He has lived in seven states and three countries and enjoys the thrill of being outside his comfort zone.</p>
+      <p>Beyond his professional work, Adam believes in serving his community as a husband, father, foster parent, volunteer for Big Brothers and Big Sisters of America, and mentor to currently and formerly incarcerated people.</p>
+      <p><a class="btn" href={amazon}>Start Reading Luck by Design Now</a></p>
+    </section>
+  </div>
+
+  <style>
+    .book-hero {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .book-hero img { border-radius: 8px; box-shadow: 0 10px 30px rgba(20, 40, 60, 0.18); }
+    .subtitle { color: var(--ink-soft); font-weight: 500; font-size: 1.25rem; }
+    .spreads { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
+    .spreads img { border-radius: 8px; width: 100%; }
+  </style>
+</Base>
