@@ -45,7 +45,11 @@ import Base from '../layouts/Base.astro';
         const btn = f.querySelector('button');
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
         try {
-          const res = await fetch(f.action, { method: 'POST', body: new FormData(f) });
+          const res = await fetch(f.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(f) as any).toString(),
+          });
           if (!res.ok) throw new Error('failed');
           f.hidden = true;
           const note = f.parentElement?.querySelector('[data-success]');
