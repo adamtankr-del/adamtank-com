@@ -1,4 +1,5 @@
 import { sendEmail, readForm } from './_send.js';
+import { screen, clientIp, validEmail, HUMAN_FALLBACK } from './_guard.js';
 
 // Adds the subscriber to the Resend audience, then notifies Adam.
 // Contact creation needs a full-access key; RESEND_API_KEY is sending-only.
@@ -23,8 +24,16 @@ async function addToAudience(email) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
   try {
-    const { email = '' } = await readForm(req);
-    if (!email || !email.includes('@')) return res.status(400).json({ error: 'invalid email' });
+    const data = await readForm(req);
+    const { email = '' } = data;
+    if (!validEmail(email)) return res.status(400).json({ error: 'That email address does not look right.' });
+
+    const verdict = await screen(req, data);
+    if (verdict.action !== 'allow') {
+      console.log(`subscribe blocked (${verdict.reason}) ip=${clientIp(req)}`);
+      if (verdict.action === 'drop') return res.status(200).json({ ok: true });
+      return res.status(verdict.status).json({ error: verdict.error });
+    }
 
     let status;
     try {
@@ -44,6 +53,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'failed' });
+    return res.status(500).json({ error: HUMAN_FALLBACK });
   }
 }

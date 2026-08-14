@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import FormGuard from '../components/FormGuard.astro';
 ---
 <Base title="Contact | Adam Tank" description="Get in touch with Adam Tank for speaking, consulting, or anything else.">
   <div class="wrap">
@@ -29,38 +30,18 @@ import Base from '../layouts/Base.astro';
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="7" required></textarea>
         </div>
+        <FormGuard />
         <button class="btn" type="submit">Send message</button>
       </form>
       <p class="form-note" hidden data-success>Thanks for reaching out. I'll get back to you within 48 to 72 hours.</p>
+      <p class="form-error" hidden data-error></p>
     </section>
   </div>
   <style>
     .form-note { color: var(--accent); font-weight: 600; }
+    .form-error { color: #b3261e; font-weight: 600; }
   </style>
   <script>
-    document.querySelectorAll('form[data-async]').forEach((form) => {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const f = e.target as HTMLFormElement;
-        const btn = f.querySelector('button');
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-        try {
-          const res = await fetch(f.action, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(new FormData(f) as any).toString(),
-          });
-          if (!res.ok) throw new Error('failed');
-          f.hidden = true;
-          document.querySelectorAll('[data-hide-on-success]').forEach((el) => {
-            (el as HTMLElement).hidden = true;
-          });
-          const note = f.parentElement?.querySelector('[data-success]');
-          if (note) (note as HTMLElement).hidden = false;
-        } catch {
-          if (btn) { btn.disabled = false; btn.textContent = 'Try again'; }
-        }
-      });
-    });
+    import '../scripts/async-forms.ts';
   </script>
 </Base>
