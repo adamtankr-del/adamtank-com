@@ -3,6 +3,45 @@ import Base from '../layouts/Base.astro';
 import FormGuard from '../components/FormGuard.astro';
 ---
 <Base title="Adam Tank | Water, Entrepreneurship, and a Well-Lived Life">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://hydroknowledge.com/#adam-tank",
+      "name": "Adam Tank",
+      "url": "https://www.adamtank.com",
+      "jobTitle": "Founder & Principal",
+      "worksFor": [
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://hydroknowledge.com/#organization",
+          "name": "HydroKnowledge",
+          "url": "https://hydroknowledge.com"
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://fullflowmarketing.com/#organization",
+          "name": "Full Flow Marketing",
+          "url": "https://fullflowmarketing.com"
+        },
+        {
+          "@type": "OrganizationRole",
+          "roleName": "Co-founder",
+          "worksFor": { "@type": "Organization", "name": "Transcend", "url": "https://transcendinfra.com/" }
+        }
+      ],
+      "sameAs": [
+        "https://hydroknowledge.com",
+        "https://www.linkedin.com/in/adamtank/",
+        "https://x.com/artank",
+        "https://transcendinfra.com/staff/adam-tank/",
+        "https://worth.com/person/adam-tank/",
+        "https://www.waterworld.com/home/contact/55020115/adam-tank",
+        "https://www.wikidata.org/wiki/Q140466014"
+      ],
+      "description": "Entrepreneur, author, and speaker working at the intersection of water and technology. Founder of HydroKnowledge and Full Flow Marketing, co-founder of Transcend and Industrial Optic, author of Luck by Design."
+    }
+  </script>
   <div class="wrap">
     <section class="section hero">
       <p class="eyebrow">Start Here</p>
@@ -67,6 +106,16 @@ import FormGuard from '../components/FormGuard.astro';
           water infrastructure. Our software has helped over 430M people obtain clean water and
           renewable power, backed by over $30M in top-tier VC funding including
           <a href="https://www.axios.com/pro/climate-deals/2023/08/03/autodesk-backs-transcends-infrastructure-design-software">Autodesk</a>.
+        </li>
+        <li>
+          <a href="https://hydroknowledge.com"><strong>HydroKnowledge</strong></a><br />
+          My advisory practice for the water sector: utility strategy, AI adoption, and
+          go-to-market work for water companies, startups, and investors.
+        </li>
+        <li>
+          <a href="https://fullflowmarketing.com"><strong>Full Flow Marketing</strong></a><br />
+          A marketing agency working only in water. Paid media, SEO, and executive influence on
+          LinkedIn for companies selling to utilities.
         </li>
         <li>
           <a href="https://www.linkedin.com/newsletters/at-water-s-edge-6862760360009703424/"><strong>At Water's Edge</strong></a><br />
