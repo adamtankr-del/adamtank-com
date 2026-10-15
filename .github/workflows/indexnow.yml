@@ -1,0 +1,41 @@
+name: IndexNow
+
+# After every push to master: wait until Vercel has the commit live, then
+# submit the changed page URLs to IndexNow (Bing and partners). Run it by hand
+# with "all" ticked to resubmit every sitemap URL.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Submit every sitemap URL
+        type: boolean
+        default: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for the Vercel deploy of this commit
+        run: |
+          for i in $(seq 1 40); do
+            live=$(curl -sf --max-time 10 https://www.adamtank.com/build.txt || true)
+            if [ "$live" = "$GITHUB_SHA" ]; then echo "live after $((i*15))s"; exit 0; fi
+            sleep 15
+          done
+          echo "deploy of $GITHUB_SHA not live after 10 minutes"; exit 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Submit URLs
+        env:
+          BEFORE: ${{ github.event.before }}
+          ALL: ${{ inputs.all }}
+        run: node scripts/indexnow.mjs

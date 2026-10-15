@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /build.txt
 
 Sitemap: https://www.adamtank.com/sitemap-index.xml
